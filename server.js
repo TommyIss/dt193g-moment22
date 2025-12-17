@@ -1,9 +1,10 @@
 /** Moment 2.2 för kursen DT193G, Fullstack utveckling med ramverk */
-require('dotenv').config();
 let fastify = require('fastify')({
     logger: true
 });
+let moviesRoutes = require('./routes/movies.routes');
 let mysql = require('@fastify/mysql');
+require('dotenv').config();
 
 let port = process.env.PORT || 3000;
 
@@ -13,17 +14,22 @@ fastify.register(mysql, {
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
+    database: process.env.DB_DATABASE,
+    promise: true,
+    multipleStatements: true
 });
 
+// Routes
 fastify.get('/', (req, reply) => {
-    reply.send({message: 'Välkommen till DT193G'});
+    reply.send({ message: 'Välkommen till DT193G, Moment2.2' });
 });
+
+fastify.register(moviesRoutes);
 
 
 // Starta servern
-fastify.listen({port: port}, (err, address) => {
-    if(err) {
+fastify.listen({ port: port }, (err, address) => {
+    if (err) {
         fastify.log.error(err);
         process.exit(1);
     } else {
