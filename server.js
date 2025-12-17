@@ -7,6 +7,7 @@ let mysql = require('@fastify/mysql');
 require('dotenv').config();
 
 let port = process.env.PORT || 3000;
+let host = '0.0.0.0';
 
 // Anslutningskonfigurationer till databas
 fastify.register(mysql, {
@@ -28,12 +29,11 @@ fastify.register(moviesRoutes);
 
 
 // Starta servern
-fastify.listen({ port: port }, (err, address) => {
+fastify.listen({ port: port, host: host }, (err, address) => {
     if (err) {
         fastify.log.error(err);
         process.exit(1);
     } else {
-        console.log('Server körs på port: ' + port);
-        console.log(address);
+        console.log('Server körs på adress: ' + address);
     }
 });
