@@ -5,7 +5,6 @@ let fastify = require('fastify')({
 let moviesRoutes = require('./routes/movies.routes');
 let mysql = require('@fastify/mysql');
 require('dotenv').config();
-let fs = require('fs');
 
 let port = process.env.PORT || 3000;
 let host = '0.0.0.0';
@@ -17,10 +16,6 @@ fastify.register(mysql, {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    ssl: {
-        rejectUnauthorized: true,
-        ca: fs.readFileSync('./ca.pem').toString()
-    },
     promise: true,
     multipleStatements: true
 });
