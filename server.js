@@ -5,7 +5,7 @@ let fastify = require('fastify')({
 let moviesRoutes = require('./routes/movies.routes');
 let mysql = require('@fastify/mysql');
 require('dotenv').config();
-
+let cors = require('@fastify/cors');
 let port = process.env.PORT || 3000;
 let host = '0.0.0.0';
 
@@ -19,6 +19,10 @@ fastify.register(mysql, {
     promise: true,
     multipleStatements: true
 });
+
+fastify.register(cors, {
+    origin: '*'
+})
 
 // Routes
 fastify.get('/', (req, reply) => {
