@@ -21,7 +21,8 @@ fastify.register(mysql, {
 });
 
 fastify.register(cors, {
-    origin: '*'
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 })
 
 // Routes
